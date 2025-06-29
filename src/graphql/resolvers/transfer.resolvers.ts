@@ -1,7 +1,13 @@
 // ./src/graphql/resolvers/transfer.resolvers.ts
 
+import {
+  IBankTransferData,
+  IVerifyBankData,
+  Pay100,
+} from "@100pay-hq/100pay.js";
 import { TransferService } from "../../services/transfer.services.js";
 import { WalletService } from "../../services/userWallet.services.js";
+import BankTransferService from "../../services/bankTransfer.services.js";
 
 interface TransferAssetsInput {
   toAddress?: string;
@@ -31,6 +37,12 @@ const transferService = new TransferService(
 
 // Initialize a new wallet service
 const walletService = new WalletService(
+  process.env.PAY100_PUBLIC_KEY || "",
+  process.env.PAY100_SECRET_KEY || ""
+);
+
+// Initialize a new bank transfer service
+const bankTransferService = new BankTransferService(
   process.env.PAY100_PUBLIC_KEY || "",
   process.env.PAY100_SECRET_KEY || ""
 );
@@ -102,6 +114,21 @@ export const transferResolvers = {
         throw error;
       }
     },
+    /**
+     * Get bank list
+     */
+    getBanks: async (parent, args, context, info) => {
+      try {
+        const userId = context?.user?.data?.id;
+        if (!userId) throw new Error("User not found");
+
+        const transferResult = await bankTransferService.getBankList();
+        return transferResult?.data;
+      } catch (error) {
+        console.log("Mutation.getBanks error", error);
+        throw error;
+      }
+    },
   },
   Mutation: {
     /**
@@ -133,6 +160,40 @@ export const transferResolvers = {
         return transferResult.data;
       } catch (error) {
         console.log("Mutation.transferAssets error", error);
+        throw error;
+      }
+    },
+    /**
+     * Verify bank
+     */
+    verifyBank: async (parent, args, context, info) => {
+      try {
+        const userId = context?.user?.data?.id;
+        if (!userId) throw new Error("User not found");
+
+        const input: IVerifyBankData = args?.input || {};
+
+        const transferResult = await bankTransferService.verifyBank(input);
+        return transferResult?.data;
+      } catch (error) {
+        console.log("Mutation.verifyBank error", error);
+        throw error;
+      }
+    },
+    /**
+     * Perform a bank transfer
+     */
+    transferToBank: async (parent, args, context, info) => {
+      try {
+        const userId = context?.user?.data?.id;
+        if (!userId) throw new Error("User not found");
+
+        const input: IBankTransferData = args?.input || {};
+
+        const transferResult = await bankTransferService.transfer(input);
+        return transferResult;
+      } catch (error) {
+        console.log("Mutation.transferBank error", error);
         throw error;
       }
     },

@@ -137,16 +137,83 @@ export const transferTypeDefs = `#graphql
     toWallet: String
   }
 
+  # Bank details
+  type Bank {
+    name: String
+    alias: [String]
+    routingKey: String
+    logoImage: String
+    bankCode: String
+    categoryId: String
+    nubanCode: String
+  }
+
+  # Bank list response
+  type BankListResponse {
+    banks: [Bank]
+    count: Int
+  }
+
+  # Verify bank input
+  input VerifyBankInput {
+    bankCode: String!
+    accountNumber: String!
+  }
+
+  # Verify bank response
+  type VerifyBankResponse {
+    accountName: String
+    accountNumber: String
+    bankCode: String
+    bankName: String
+    verified: Boolean
+  }
+
+  # Bank transfer data
+  type BankTransferData {
+    amount: Float
+    beneficiaryAccountName: String
+    beneficiaryAccountNumber: String
+    beneficiaryBankCode: String
+    narration: String
+    paymentReference: String
+    saveBeneficiary: Boolean
+  }
+
+  # Bank transfer response
+  type BankTransferResponse {
+    message: String
+    data: BankTransferData
+  }
+
+  # Bank transfer input
+  input BankTransferInput {
+    beneficiaryBankCode: String!
+    beneficiaryAccountNumber: String!
+    beneficiaryAccountName: String!
+    amount: Float!
+    narration: String!
+    paymentReference: String!
+    saveBeneficiary: Boolean!
+  }
+
   extend type Query {
     # Get transfer history for the authenticated user
     getTransferHistory(pagination: Pagination, symbols: [String]): TransferHistoryData
 
     # Calculate transfer fee for a transaction
     calculateTransferFee(input: TransferFeeInput!): FeeCalculationResponse
+
+    # Bank List
+    getBanks: BankListResponse
   }
 
   extend type Mutation {
     # Transfer assets to another user
-    transferAssets(input: TransferAssetsInput!): TransferAssetResponse
+    transferAssets(input: TransferAssetsInput): TransferAssetResponse
+    # Verify bank
+    verifyBank(input: VerifyBankInput): VerifyBankResponse
+    # Perform a bank transfer
+    transferToBank(input: BankTransferInput): BankTransferResponse
   }
 `;
