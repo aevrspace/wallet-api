@@ -52,11 +52,11 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.0.3",
+    "@types/node": "^24.2.0",
     "@types/nodemailer": "^6.4.17",
     "@types/otp-generator": "^4.0.2",
     "commitizen": "^4.3.1",
@@ -64,6 +64,6 @@
     "husky": "^9.1.7",
     "nodemon": "^3.1.10",
     "standard-version": "^9.5.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }
