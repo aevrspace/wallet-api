@@ -50,20 +50,20 @@
     "zeptomail": "^6.2.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@types/bcrypt": "^5.0.2",
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.0.3",
+    "@types/node": "^24.10.1",
     "@types/nodemailer": "^6.4.17",
     "@types/otp-generator": "^4.0.2",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^9.1.7",
-    "nodemon": "^3.1.10",
+    "nodemon": "^3.1.11",
     "standard-version": "^9.5.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   }
 }
